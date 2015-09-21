@@ -8,6 +8,10 @@ from pprint import pprint
 
 to_host='localhost'
 
+known_hosts = {'CERT' : 'ec2-54-89-218-222.compute-1.amazonaws.com',
+               'CERT-SP': 'ec2-54-167-178-134.compute-1.amazonaws.com',
+               'CERT-FR': 'ec2-54-147-196-177.compute-1.amazonaws.com'}
+
 def fetch(from_host, query):
     from_url='http://%s:8080/solr/select?%s&fl=*&wt=json' % (from_host, query)
     print(from_url)
@@ -28,6 +32,8 @@ def post(stuff):
 
 if __name__ == '__main__':
     from_host, q, *opts = argv[1:]
+    if from_host.upper() in known_hosts:
+        from_host = known_hosts[from_host.upper()]
     start, batch_size, end = [int(o) for o in opts] if opts else (0, 100, 100)
     if batch_size:
         for s in range(start, end, batch_size):
