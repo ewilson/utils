@@ -9,7 +9,7 @@ localhost = 'localhost'
 
 def delete(from_host, query):
     del_query = '<delete><query>%s</query></delete>' % query
-    from_url='http://%s:8080/solr/update' % from_host
+    from_url='http://%s:8080/solr/ck/update' % from_host
     print("%s -- %s" % (from_url, del_query))
     res = requests.post(from_url, del_query)
     requests.post(from_url, '<commit>')
